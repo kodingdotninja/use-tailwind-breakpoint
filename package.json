@@ -1,7 +1,7 @@
 {
   "name": "@kodingdotninja/use-tailwind-breakpoint",
   "description": "Custom hooks to use breakpoints for React 🎐🔨",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Griko Nibras <griko@koding.ninja>",
   "homepage": "https://github.com/kodingdotninja/use-tailwind-breakpoint",
   "repository": "https://github.com/kodingdotninja/use-tailwind-breakpoint.git",

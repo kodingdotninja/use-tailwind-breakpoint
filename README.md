@@ -88,7 +88,7 @@ Then pass the extracted `screens` to the `create` function:
 
 import create from "@kodingdotninja/use-tailwind-breakpoint";
 
-import tailwindScreens from "path/to/tailwind.screens.js";
+import screens from "path/to/tailwind.screens.js";
 
 export const { useBreakpoint } = create(screens);
 ```
@@ -100,7 +100,7 @@ export const { useBreakpoint } = create(screens);
 Use breakpoint value from given breakpoint token
 
 ```jsx
-import { useBreakpoint } from "./lib/";
+import { useBreakpoint } from "./lib/tailwind";
 
 function App() {
   const isDesktop = useBreakpoint("md");
@@ -114,7 +114,7 @@ function App() {
 Use given breakpoint value to run an effect
 
 ```jsx
-import { useBreakpointEffect } from "@kodingdotninja/use-tailwind-breakpoint";
+import { useBreakpointEffect } from "./lib/tailwind";
 
 function App() {
   useBreakpointEffect("md", (match) => {
@@ -130,7 +130,7 @@ function App() {
 Resolve value from given breakpoint value
 
 ```jsx
-import { useBreakpointValue } from "@kodingdotninja/use-tailwind-breakpoint";
+import { useBreakpointValue } from "./lib/tailwind";
 
 function App() {
   const value = useBreakpointValue("md", "Desktop", "Mobile");

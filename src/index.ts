@@ -90,7 +90,7 @@ export type CreatorReturnType = {
  * export const { useBreakpoint, useBreakpointEffect, useBreakpointValue, ... } = create(tailwindConfig);
  * ```
  */
-export default function create<Config extends TailwindConfig>(configFile: Config) {
+export function create<Config extends TailwindConfig>(configFile: Config) {
   const config = resolveConfig(configFile);
 
   function useBreakpoint<Breakpoint>(breakpoint: Breakpoint, defaultValue: boolean = false) {
@@ -135,3 +135,5 @@ export default function create<Config extends TailwindConfig>(configFile: Config
     useBreakpointValue,
   } as CreatorReturnType;
 }
+
+export default create;

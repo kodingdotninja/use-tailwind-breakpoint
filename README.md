@@ -13,7 +13,8 @@ Custom hooks to use Tailwind CSS breakpoints for React 🎐🔨
 **Table of contents**
 
 - [Installing](#installing)
-- [Example usage](#example-usage)
+- [Usage](#usage)
+- [Available hooks](#available-hooks)
   - [`useBreakpoint()`](#usebreakpoint)
   - [`useBreakpointEffect()`](#usebreakpointeffect)
   - [`useBreakpointValue()`](#usebreakpointvalue)
@@ -33,7 +34,18 @@ npm install @kodingdotninja/use-tailwind-breakpoint
 yarn add @kodingdotninja/use-tailwind-breakpoint
 ```
 
-## Example usage
+## Usage
+
+[Similar to `pmndrs/zustand`'s `create` API](https://github.com/pmndrs/zustand/#first-create-a-store), create the breakpoint hooks by resolving your `tailwind.config.js`:
+
+```ts
+import create from "@kodingdotninja/use-tailwind-breakpoint";
+import tailwindConfig from "path/to/tailwind.config";
+
+export const { useBreakpoint, ... } = create(tailwindConfig);
+```
+
+## Available hooks
 
 ### `useBreakpoint()`
 

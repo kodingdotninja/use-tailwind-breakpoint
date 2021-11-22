@@ -2,12 +2,7 @@ import * as React from "react";
 
 import { isBrowser, useIsomorphicEffect } from "./utils";
 
-import resolveConfig from "tailwindcss/resolveConfig";
-import { TailwindConfig } from "tailwindcss/tailwind-config";
-
 export * from "./utils";
-
-export type Breakpoints = { readonly [breakpoint: string]: string };
 
 export type CreatorReturnType = {
   /**
@@ -15,7 +10,7 @@ export type CreatorReturnType = {
    *
    * ---
    *
-   * @param breakpoint Breakpoint value ([view documentation](https://tailwindcss.com/docs/breakpoints))
+   * @param breakpoint Breakpoint value
    *
    * @param defaultValue Default value to be used before initializing breakpoint value
    *
@@ -34,7 +29,7 @@ export type CreatorReturnType = {
    *
    * ---
    *
-   * @param breakpoint Breakpoint value ([view documentation](https://tailwindcss.com/docs/breakpoints))
+   * @param breakpoint Breakpoint value
    *
    * @param effect Effect callback/closure when current view is on valid breakpoint
    *
@@ -55,7 +50,7 @@ export type CreatorReturnType = {
    *
    * ---
    *
-   * @param breakpoint Breakpoint value ([view documentation](https://tailwindcss.com/docs/breakpoints))
+   * @param breakpoint Breakpoint value
    *
    * @param valid Value if current view is on valid breakpoint
    *
@@ -73,28 +68,25 @@ export type CreatorReturnType = {
 };
 
 /**
- * Initialize breakpoint hooks from given Tailwind CSS configuration file
+ * Initialize breakpoint hooks from given configuration
  *
  * ---
  *
- * @param configOrScreens Tailwind CSS configuration file (`tailwind.config.js`)
+ * @param screens Breakpoints/screens object (`{ sm: "640px", md: "768px", ... }`)
  *
  * @returns Breakpoint hooks
  *
  * @example
  *
  * ```jsx
- * // hooks/tailwind.ts
+ * // hooks/breakpoint.ts
  *
  * import create from "@kodingdotninja/use-tailwind-breakpoint";
- * import tailwindConfig from "path/to/tailwind.config";
  *
- * export const { useBreakpoint, useBreakpointEffect, useBreakpointValue, ... } = create(tailwindConfig);
+ * export const { useBreakpoint, ... } = create({ sm: "640px", ... });
  * ```
  */
-export function create<ConfigOrScreens extends TailwindConfig | Breakpoints>(configOrScreens: ConfigOrScreens) {
-  const screens = (resolveConfig(configOrScreens as TailwindConfig).theme.screens ?? configOrScreens) as Breakpoints;
-
+export function create<Screens extends { readonly [breakpoint: string]: string }>(screens: Screens) {
   function useBreakpoint(breakpoint: string, defaultValue: boolean = false) {
     const [match, setMatch] = React.useState(() => defaultValue);
     const matchRef = React.useRef(defaultValue);
@@ -103,7 +95,7 @@ export function create<ConfigOrScreens extends TailwindConfig | Breakpoints>(con
       if (!(isBrowser && "matchMedia" in window)) return undefined;
 
       function track() {
-        const value = screens?.[breakpoint] ?? "999999px";
+        const value = (screens[breakpoint] as "") ?? "999999px";
         const query = window.matchMedia(`(min-width: ${value})`);
         matchRef.current = query.matches;
         if (matchRef.current != match) {

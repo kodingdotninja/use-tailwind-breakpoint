@@ -1,6 +1,6 @@
 {
   "name": "@kodingdotninja/use-tailwind-breakpoint",
-  "description": "Custom hooks to use Tailwind CSS breakpoints for React 🎐🔨",
+  "description": "Custom hooks to use breakpoints for React 🎐🔨",
   "version": "0.0.3",
   "author": "Griko Nibras <griko@koding.ninja>",
   "homepage": "https://github.com/kodingdotninja/use-tailwind-breakpoint",
@@ -43,13 +43,11 @@
     "np": "^7",
     "react": "^17",
     "react-dom": "^17",
-    "tailwindcss": "^2",
     "tsup": "^5",
     "typescript": "^4"
   },
   "peerDependencies": {
-    "react": ">=16.8",
-    "tailwindcss": ">=2"
+    "react": ">=16.8"
   },
   "peerDependenciesMeta": {
     "react": {

@@ -14,6 +14,8 @@ Custom hooks to use Tailwind CSS breakpoints for React 🎐🔨
 
 - [Installing](#installing)
 - [Usage](#usage)
+  - [Option #1: Resolve directly from `tailwind.config.js`](#option-1-resolve-directly-from-tailwindconfigjs)
+  - [Option #2: Only pass breakpoint values](#option-2-only-pass-breakpoint-values)
 - [Available hooks](#available-hooks)
   - [`useBreakpoint()`](#usebreakpoint)
   - [`useBreakpointEffect()`](#usebreakpointeffect)
@@ -36,13 +38,59 @@ yarn add @kodingdotninja/use-tailwind-breakpoint
 
 ## Usage
 
-[Similar to `pmndrs/zustand`'s `create` API](https://github.com/pmndrs/zustand/#first-create-a-store), create the breakpoint hooks by resolving your `tailwind.config.js`:
+### Option #1: Resolve directly from `tailwind.config.js`
+
+[Similar to `pmndrs/zustand`'s `create` API](https://github.com/pmndrs/zustand/#first-create-a-store), initialize the breakpoint hooks by passing the `tailwind.config.js` which will be resolved internally using [`resolveConfig`](https://github.com/tailwindlabs/tailwindcss/blob/master/src/util/resolveConfig.js):
 
 ```ts
-import create from "@kodingdotninja/use-tailwind-breakpoint";
-import tailwindConfig from "path/to/tailwind.config";
+// /hooks/tailwind.ts
 
-export const { useBreakpoint, ... } = create(tailwindConfig);
+import create from "@kodingdotninja/use-tailwind-breakpoint";
+
+import tailwindConfig from "path/to/tailwind.config.js";
+
+export const { useBreakpoint } = create(tailwindConfig);
+```
+
+> ⚠️ This possibly imports all `tailwind.config.js` values. Make sure to check the client bundle size.
+
+### Option #2: Only pass breakpoint values
+
+Extract the [`screens`](https://tailwindcss.com/docs/breakpoints) values into a separate file:
+
+```js
+// tailwind.screens.js or other name to separate breakpoint values
+const screens = {
+  sm: "640px",
+  md: "768px",
+  // ...
+};
+```
+
+To keep the same values, `require` inside `tailwind.config.js`:
+
+```js
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      screens: require("path/to/tailwind.screens.js"),
+    },
+  },
+  // ...
+};
+```
+
+Then pass the extracted `screens` to the `create` function:
+
+```ts
+// /hooks/tailwind.ts
+
+import create from "@kodingdotninja/use-tailwind-breakpoint";
+
+import tailwindScreens from "path/to/tailwind.screens.js";
+
+export const { useBreakpoint } = create(screens);
 ```
 
 ## Available hooks
@@ -52,7 +100,7 @@ export const { useBreakpoint, ... } = create(tailwindConfig);
 Use breakpoint value from given breakpoint token
 
 ```jsx
-import { useBreakpoint } from "@kodingdotninja/use-tailwind-breakpoint";
+import { useBreakpoint } from "./lib/";
 
 function App() {
   const isDesktop = useBreakpoint("md");

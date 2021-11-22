@@ -7,6 +7,8 @@ import { TailwindConfig } from "tailwindcss/tailwind-config";
 
 export * from "./utils";
 
+export type Breakpoints = { readonly [breakpoint: string]: string };
+
 export type CreatorReturnType = {
   /**
    * Use breakpoint value from given breakpoint token
@@ -75,7 +77,7 @@ export type CreatorReturnType = {
  *
  * ---
  *
- * @param configFile Tailwind CSS configuration file (`tailwind.config.js`)
+ * @param configOrScreens Tailwind CSS configuration file (`tailwind.config.js`)
  *
  * @returns Breakpoint hooks
  *
@@ -90,10 +92,10 @@ export type CreatorReturnType = {
  * export const { useBreakpoint, useBreakpointEffect, useBreakpointValue, ... } = create(tailwindConfig);
  * ```
  */
-export function create<Config extends TailwindConfig>(configFile: Config) {
-  const config = resolveConfig(configFile);
+export function create<ConfigOrScreens extends TailwindConfig | Breakpoints>(configOrScreens: ConfigOrScreens) {
+  const screens = (resolveConfig(configOrScreens as TailwindConfig).theme.screens ?? configOrScreens) as Breakpoints;
 
-  function useBreakpoint<Breakpoint>(breakpoint: Breakpoint, defaultValue: boolean = false) {
+  function useBreakpoint(breakpoint: string, defaultValue: boolean = false) {
     const [match, setMatch] = React.useState(() => defaultValue);
     const matchRef = React.useRef(defaultValue);
 
@@ -101,8 +103,7 @@ export function create<Config extends TailwindConfig>(configFile: Config) {
       if (!(isBrowser && "matchMedia" in window)) return undefined;
 
       function track() {
-        // @ts-expect-error tsconfig.compilerOptions.strict prevents accessing index with unknown value type
-        const value = (config.theme.screens?.[breakpoint] as string) ?? "999999px";
+        const value = screens?.[breakpoint] ?? "999999px";
         const query = window.matchMedia(`(min-width: ${value})`);
         matchRef.current = query.matches;
         if (matchRef.current != match) {

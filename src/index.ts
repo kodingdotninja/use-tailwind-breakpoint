@@ -86,7 +86,11 @@ export type CreatorReturnType = {
  * export const { useBreakpoint, ... } = create({ sm: "640px", ... });
  * ```
  */
-export function create<Screens extends { readonly [breakpoint: string]: string }>(screens: Screens) {
+export function create(screens: object | undefined) {
+  if (!screens) {
+    throw new Error("Failed to create breakpoint hooks, given `screens` value is invalid.");
+  }
+
   function useBreakpoint(breakpoint: string, defaultValue: boolean = false) {
     const [match, setMatch] = React.useState(() => defaultValue);
     const matchRef = React.useRef(defaultValue);
@@ -95,7 +99,8 @@ export function create<Screens extends { readonly [breakpoint: string]: string }
       if (!(isBrowser && "matchMedia" in window)) return undefined;
 
       function track() {
-        const value = (screens[breakpoint] as "") ?? "999999px";
+        // @ts-expect-error accessing index with uncertain `screens` type
+        const value = (screens[breakpoint] as string) ?? "999999px";
         const query = window.matchMedia(`(min-width: ${value})`);
         matchRef.current = query.matches;
         if (matchRef.current != match) {

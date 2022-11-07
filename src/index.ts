@@ -109,6 +109,7 @@ export function create(screens: object | undefined) {
       }
 
       window.addEventListener("resize", track);
+      track();
       return () => window.removeEventListener("resize", track);
     });
 

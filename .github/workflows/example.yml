@@ -1,0 +1,55 @@
+name: Example
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  id-token: write
+  pages: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    if: github.repository == 'kodingdotninja/use-tailwind-breakpoint'
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          run_install: false
+
+      - name: setup node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: pnpm
+          node-version-file: .nvmrc
+
+      - name: install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: build
+        run: pnpm -F example run build
+
+      - name: setup pages
+        uses: actions/configure-pages@v4
+
+      - name: upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./example/dist/"
+
+      - name: deploy to github pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,4 +1,4 @@
-import { create } from "use-tailwind-breakpoint";
+import { create } from "@kodingdotninja/use-tailwind-breakpoint";
 
 export const breakpoints = {
   sm: "640px",

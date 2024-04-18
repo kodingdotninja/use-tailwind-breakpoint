@@ -1,5 +1,5 @@
 {
-  "name": "use-tailwind-breakpoint",
+  "name": "@kodingdotninja/use-tailwind-breakpoint",
   "description": "Custom hooks to use breakpoints for React 🎐🔨",
   "version": "1.0.0",
   "author": "Griko Nibras <griko@koding.ninja>",
@@ -32,6 +32,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch src",
+    "postpublish": "git reset HEAD --hard",
     "prepack": "node scripts/prepack.js",
     "prepublishOnly": "pnpm run build",
     "release": "changeset publish"

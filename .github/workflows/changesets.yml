@@ -1,0 +1,42 @@
+name: Changesets
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  actions: write
+  contents: write
+  id-token: write
+  pull-requests: write
+
+jobs:
+  version:
+    if: github.repository == 'kodingdotninja/use-tailwind-breakpoint'
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: setup node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: pnpm
+          node-version-file: .nvmrc
+
+      - name: install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: create release pr or publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          commit: "feat: version packages"
+          title: "feat: version packages"
+          publish: pnpm run release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

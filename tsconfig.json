@@ -1,20 +1,21 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "downlevelIteration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
-    "lib": ["dom", "esnext"],
+    "jsx": "preserve",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
     "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
     "resolveJsonModule": true,
-    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
-    "target": "es2017"
+    "target": "esnext"
   },
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["dist", "node_modules"],
+  "include": ["src/**/*.ts"]
 }

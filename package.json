@@ -1,7 +1,7 @@
 {
-  "name": "@kodingdotninja/use-tailwind-breakpoint",
+  "name": "use-tailwind-breakpoint",
   "description": "Custom hooks to use breakpoints for React 🎐🔨",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "author": "Griko Nibras <griko@koding.ninja>",
   "homepage": "https://github.com/kodingdotninja/use-tailwind-breakpoint",
   "repository": "https://github.com/kodingdotninja/use-tailwind-breakpoint.git",
@@ -11,72 +11,49 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "module": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
     }
   },
   "main": "dist/index.js",
   "module": "dist/index.mjs",
-  "types": "dist/index.d.js",
+  "types": "dist/index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "# general commands": "##################################################",
     "build": "tsup",
-    "deduplicate": "npx yarn-deduplicate && yarn install",
     "dev": "tsup --watch src",
-    "lint": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
-    "prepare": "husky install $PWD/.husky",
-    "prepublishOnly": "yarn lint",
-    "ship": "np",
-    "type-check": "tsc --noEmit",
-    "validate": "yarn lint && yarn type-check",
-    "#": "###################################################################"
+    "prepack": "node scripts/prepack.js",
+    "prepublishOnly": "pnpm run build",
+    "release": "changeset publish"
   },
   "devDependencies": {
-    "@types/node": "^14",
-    "@types/react": "^17",
-    "eslint": "^7",
-    "eslint-config-kdnj": "^1",
-    "husky": "^7",
-    "lint-staged": "^12",
-    "np": "^7",
-    "react": "^17",
-    "react-dom": "^17",
-    "tsup": "^5",
-    "typescript": "^4"
+    "@types/node": "^20.12.7",
+    "@types/react": "^18.2.79",
+    "react": "^18.2.0",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.5"
   },
   "peerDependencies": {
-    "react": ">=16.8"
+    "react": ">=16.8",
+    "tailwindcss": "*"
   },
   "peerDependenciesMeta": {
     "react": {
       "optional": true
+    },
+    "tailwindcss": {
+      "optional": true
     }
-  },
-  "eslintConfig": {
-    "env": {
-      "browser": true
-    },
-    "extends": [
-      "eslint-config-kdnj/react"
-    ],
-    "ignorePatterns": [
-      "dist"
-    ],
-    "rules": {
-      "react/react-in-jsx-scope": [
-        "off"
-      ]
-    },
-    "root": true
-  },
-  "lint-staged": {
-    "*.{js,json,md}": [
-      "prettier --write"
-    ],
-    "src/*.{js,jsx,ts,tsx}": [
-      "eslint --fix"
-    ]
   },
   "prettier": {
     "endOfLine": "auto",
@@ -102,5 +79,6 @@
     "use-tailwind-breakpoint",
     "use-tailwind-breakpoints"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "packageManager": "pnpm@9.0.0+sha256.bdfc9a7b372b5c462176993e586492603e20da5864d2f8881edc2462482c76fa"
 }

@@ -12,7 +12,7 @@ Custom hooks to use breakpoints for React 🎐🔨
 
 **Table of contents**
 
-- [Installing](#installing)
+- [Install](#install)
 - [Usage](#usage)
   - [Resolve from Tailwind CSS configuration](#resolve-from-tailwind-css-configuration)
   - [Extract `screens` values](#extract-screens-values)
@@ -21,20 +21,15 @@ Custom hooks to use breakpoints for React 🎐🔨
   - [`useBreakpoint()`](#usebreakpoint)
   - [`useBreakpointEffect()`](#usebreakpointeffect)
   - [`useBreakpointValue()`](#usebreakpointvalue)
-- [Suggestions and/or questions](#suggestions-andor-questions)
 - [Maintainers](#maintainers)
 - [License](#license)
 
 ---
 
-## Installing
+## Install
 
 ```sh
-# using npm
-npm install @kodingdotninja/use-tailwind-breakpoint
-
-# using yarn
-yarn add @kodingdotninja/use-tailwind-breakpoint
+pnpm install @kodingdotninja/use-tailwind-breakpoint
 ```
 
 ## Usage
@@ -46,7 +41,7 @@ yarn add @kodingdotninja/use-tailwind-breakpoint
 ```ts
 // /hooks/tailwind.ts
 
-import create from "@kodingdotninja/use-tailwind-breakpoint";
+import { create } from "@kodingdotninja/use-tailwind-breakpoint";
 import resolveConfig from "tailwindcss/resolveConfig";
 
 import tailwindConfig from "path/to/tailwind.config.js";
@@ -86,7 +81,7 @@ Then pass the extracted `screens` to the `create` function:
 ```ts
 // /hooks/tailwind.ts
 
-import create from "@kodingdotninja/use-tailwind-breakpoint";
+import { create } from "@kodingdotninja/use-tailwind-breakpoint";
 
 import screens from "path/to/tailwind.screens.js";
 
@@ -155,14 +150,10 @@ function App() {
 }
 ```
 
-## Suggestions and/or questions
-
-Head over to our [dedicated Discord channel for `use-tailwind-breakpoint`](https://discord.gg/Zrfr7VqtpR).
-
 ## Maintainers
 
 - Griko Nibras ([@grikomsn](https://github.com/grikomsn))
 
 ## License
 
-[MIT License, Copyright (c) 2021 Koding Ninja](./LICENSE)
+[MIT License, Copyright (c) 2024 Koding Ninja](./LICENSE)

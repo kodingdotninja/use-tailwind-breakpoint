@@ -1,9 +1,21 @@
+import type { Options } from "tsup";
 import { defineConfig } from "tsup";
 
-export default defineConfig({
+const defaultOptions: Options = {
+  cjsInterop: true,
   clean: true,
-  dts: true,
-  entryPoints: ["src/*.ts"],
-  format: ["esm", "cjs"],
+  format: ["cjs", "esm"],
+  shims: true,
   splitting: true,
-});
+  treeshake: true,
+};
+
+export default defineConfig(({ watch }) => [
+  {
+    ...defaultOptions,
+    dts: true,
+    entry: ["src/index.ts"],
+    format: ["cjs", "esm"],
+    minify: !watch,
+  },
+]);

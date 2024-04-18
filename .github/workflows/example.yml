@@ -39,13 +39,13 @@ jobs:
       - name: install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: build
-        run: pnpm -F example run build
+      - name: build package and example page
+        run: pnpm run build && pnpm -F example run build
 
-      - name: setup pages
+      - name: setup github pages
         uses: actions/configure-pages@v4
 
-      - name: upload artifact
+      - name: upload artifacts
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./example/dist/"
